@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>New Professor</title>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<br>
+		<h2>New Professor</h2>
+		<br>
+		<form action="#" th:action="@{/professor/save}"
+			th:object="${professor}" method="POST">
+			<div class="form-group">
+				<label for="code">Code :</label> <input type="text"
+					th:field=*{code} class="form-control mb-4 col-4"
+					placeholder="Enter Code" required>
+			</div>
+			<div class="form-group">
+				<label for="fname">Full Name :</label> <input type="text"
+					th:field="*{fullName}" class="form-control mb-4 col-4" id="fname"
+					placeholder="Enter full name" name="fname" required>
+			</div>
+			<div class="form-group">
+				<label for="uname">Username :</label> <input type="text"
+					th:field="*{username}" class="form-control mb-4 col-4" id="uname"
+					placeholder="Enter username" name="uname" required>
+			</div>
+			<div class="form-group">
+				<label for="pwd">Password :</label> <input type="password"
+					th:field="*{password}" class="form-control mb-4 col-4" id="pwd"
+					placeholder="Enter password" name="pswd" required>
+			</div>
+			<div class="form-group">
+				<label for="phone">Phone :</label> <input type="text"
+					th:field="*{phone}" class="form-control mb-4 col-4" id="phone"
+					placeholder="Enter phone number" name="phone" required>
+			</div>
+			<div class="form-group">
+				<label for="email">E-mail :</label> <input type="email"
+					th:value="${email}" class="form-control mb-4 col-4" id="email"
+					placeholder="Enter e-mail" name="email" required>
+			</div>
+			<!-- 
+			<div class="form-group">
+				<label for="code">Code :</label> <input type="text"
+					th:value="${code}" class="form-control mb-4 col-4" id="code"
+					placeholder="Enter Code" name="code" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<div class="form-group">
+				<label for="fname">Full Name :</label> <input type="text"
+					th:value="${fullName}" class="form-control mb-4 col-4" id="fname"
+					placeholder="Enter full name" name="fname" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<div class="form-group">
+				<label for="uname">Username :</label> <input type="text"
+					th:value="${username}" class="form-control mb-4 col-4" id="uname"
+					placeholder="Enter username" name="uname" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<div class="form-group">
+				<label for="pwd">Password :</label> <input type="password"
+					th:value="${password}" class="form-control mb-4 col-4" id="pwd"
+					placeholder="Enter password" name="pswd" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<div class="form-group">
+				<label for="phone">Phone :</label> <input type="text"
+					th:value="${phone}" class="form-control mb-4 col-4" id="phone"
+					placeholder="Enter phone number" name="phone" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			<div class="form-group">
+				<label for="email">E-mail :</label> <input type="email"
+					th:value="${email}" class="form-control mb-4 col-4" id="email"
+					placeholder="Enter e-mail" name="email" required>
+				<div class="valid-feedback">Valid.</div>
+				<div class="invalid-feedback">Please fill out this field.</div>
+			</div>
+			 -->
+			<button type="submit" class="btn btn-success col-2">Save</button>
+		</form>
+		<br>
+	</div>
+
+</body>
+</html>

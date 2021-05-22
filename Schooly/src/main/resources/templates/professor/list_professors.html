@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>The list of professors</title>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container" align="center">
+		<br>
+		<br>
+		<h2>Professors List</h2>
+		<br> <a th:href="@{/professor/new}"
+			class="btn btn-primary btn-sm mb-3">Add Professor</a><br>
+		<br>
+		<table class="table table-bordered table-reponsive-md">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Code</th>
+					<th>Full Name</th>
+					<!-- <th>Course</th>  -->
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Actions</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="professor : ${listProfessors}">
+					<td th:text=${professor.id}></td>
+					<td th:text=${professor.code}></td>
+					<td th:text=${professor.fullName}></td>
+					<!-- <td><option th:each=" c : ${listCourses}"
+							th:if="${c.professor.idUser == professor.idUser}"
+							th:text="${c.name}"></td> -->
+					<td th:text=${professor.phone}></td>
+					<td th:text=${professor.email}></td>
+					<td><a th:href="@{/professor/update/{id}(id=${professor.id})}"
+						class="btn btn-primary">Update</a> <a
+						th:href="@{/professor/delete/{id}(id=${professor.id})}"
+						class="btn btn-danger">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
