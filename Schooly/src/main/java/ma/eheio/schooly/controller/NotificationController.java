@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ma.eheio.schooly.model.Notification;
-import ma.eheio.schooly.services.NotificationService;
+import ma.eheio.schooly.services.notification.NotificationService;
 
 //TO DO : Change @Controller to @RestController
 //@RestController
@@ -47,7 +47,7 @@ public class NotificationController {
 		/**
 		 * Get notification from the service
 		 */
-		Notification notification = notificationService.getById(id);
+		Notification notification = notificationService.findById(id);
 
 		/**
 		 * Set notification as a model attribute to pre-populate the form
@@ -59,7 +59,7 @@ public class NotificationController {
 
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Long id) {
-		Notification notification = notificationService.getById(id);
+		Notification notification = notificationService.findById(id);
 		notificationService.delete(notification);
 
 		return "redirect:/notification/list";
@@ -70,7 +70,7 @@ public class NotificationController {
 	 */
 	@GetMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("list", notificationService.getAll());
+		model.addAttribute("list", notificationService.findAll());
 		return "notification/list_notifications";
 	}
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Course {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 
@@ -44,8 +45,8 @@ public class Course {
 	private Integer duration;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "professor_id")
-	private Professor professor;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "classroom_id")
@@ -56,14 +57,14 @@ public class Course {
 	}
 
 	public Course(Long id, @NotNull String name, @NotNull Integer day, @NotNull LocalTime startTime,
-			@NotNull Integer duration, Professor professor, Classroom classroom) {
+			@NotNull Integer duration, User user, Classroom classroom) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.day = day;
 		this.startTime = startTime;
 		this.duration = duration;
-		this.professor = professor;
+		this.user = user;
 		this.classroom = classroom;
 	}
 
@@ -107,12 +108,12 @@ public class Course {
 		this.duration = duration;
 	}
 
-	public Professor getProfessor() {
-		return professor;
+	public User getUser() {
+		return user;
 	}
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Classroom getClassroom() {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ma.eheio.schooly.model.School;
-import ma.eheio.schooly.services.SchoolService;
+import ma.eheio.schooly.services.school.SchoolService;
 
 //TO DO : Change @Controller to @RestController
 //@RestController
@@ -50,7 +50,7 @@ public class SchoolController {
 		/**
 		 * Get school from the service
 		 */
-		School school = schoolService.getById(id);
+		School school = schoolService.findById(id);
 
 		/**
 		 * Set school as a model attribute to pre-populate the form
@@ -62,7 +62,7 @@ public class SchoolController {
 	
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Long id) {
-		School school = schoolService.getById(id);
+		School school = schoolService.findById(id);
 		schoolService.delete(school);
 		return "redirect:/school/list";
 	}
@@ -72,7 +72,7 @@ public class SchoolController {
 	 */
 	@GetMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("list", schoolService.getAll());
+		model.addAttribute("list", schoolService.findAll());
 		//model.addAttribute("listClassrooms", classroomService.getAll());
 		return "school/list_schools";
 	}

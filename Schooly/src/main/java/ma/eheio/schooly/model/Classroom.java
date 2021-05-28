@@ -40,14 +40,6 @@ public class Classroom {
 	private List<Device> devices;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "administrator_id")
-	private Administrator administrator;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "professor_id")
-	private Professor professor;
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private School school;
 
@@ -56,15 +48,13 @@ public class Classroom {
 	}
 
 	public Classroom(Long id, @NotNull String name, @NotNull String type, List<Course> courses, List<Device> devices,
-			Administrator administrator, Professor professor, School school) {
+			School school) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.courses = courses;
 		this.devices = devices;
-		this.administrator = administrator;
-		this.professor = professor;
 		this.school = school;
 	}
 
@@ -106,22 +96,6 @@ public class Classroom {
 
 	public void setDevices(List<Device> devices) {
 		this.devices = devices;
-	}
-
-	public Administrator getAdministrator() {
-		return administrator;
-	}
-
-	public void setAdministrator(Administrator administrator) {
-		this.administrator = administrator;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
 	}
 
 	public School getSchool() {
