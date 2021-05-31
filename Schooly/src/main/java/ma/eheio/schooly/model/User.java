@@ -1,6 +1,5 @@
 package ma.eheio.schooly.model;
 
-import org.hibernate.annotations.NaturalId;
 import org.joda.time.LocalDateTime;
 
 import javax.validation.constraints.Email;
@@ -32,40 +31,36 @@ import javax.persistence.OneToMany;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 
 	@NotNull
-	@Column(name = "user_id")
+	@Column(name = "user_id", length = 50)
 	private String userID;
 
 	@NotNull
-	@Column(name = "first_name")
-	@Size(min = 3, max = 30)
+	@Column(name = "first_name", length = 50)
 	private String firstName;
 
 	@NotNull
-	@Column(name = "last_name")
-	@Size(min = 3, max = 30)
+	@Column(name = "last_name", length = 50)
 	private String lastName;
 
 	@NotNull
-	@Column(name = "phone")
+	@Column(name = "phone", length = 50)
 	private String phone;
 
 	@NotNull
-	@NaturalId
+	//@NaturalId
 	@Email
-	@Column(name = "email", unique = true ,length = 50)
+	@Column(name = "email", unique = true, length = 50)
 	private String email;
 
-	@Column(name = "username", unique = true)
-	@Size(min = 3, max = 50)
+	@Column(name = "username", unique = true, length = 50)
 	private String username;
 
-	@Column(name = "password")
-	@Size(min = 8, max = 20)
+	@Column(name = "password", length = 50)
 	private String password;
 
 	@Column(name = "last_connection")
@@ -135,6 +130,33 @@ public class User {
 		this.email = email;
 		this.username = username;
 		this.password = password;
+	}
+
+	public User(@NotNull String userID, @NotNull @Size(min = 3, max = 30) String firstName,
+			@NotNull @Size(min = 3, max = 30) String lastName, @NotNull String phone, @NotNull @Email String email,
+			@Size(min = 3, max = 50) String username, @Size(min = 8, max = 20) String password) {
+		super();
+		this.userID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+	}
+
+	public User(@NotNull String userID, @NotNull @Size(min = 3, max = 30) String firstName,
+			@NotNull @Size(min = 3, max = 30) String lastName, @NotNull String phone, @NotNull @Email String email,
+			@Size(min = 3, max = 50) String username, @Size(min = 8, max = 20) String password, Set<Role> roles) {
+		super();
+		this.userID = userID;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
 	}
 
 	public Long getId() {

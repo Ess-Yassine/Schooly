@@ -56,7 +56,7 @@ public class UserRepositoryHibernate implements UserRepository {
 	public User findByUsername(String username) {
 		return userRepositoryJpa.findByUsername(username);
 	}
-
+	
 	@Override
 	public User findByCredentials(String username, String password) {
 		return userRepositoryJpa.findByCredentials(username, password);
@@ -68,14 +68,11 @@ public class UserRepositoryHibernate implements UserRepository {
 		boolean exist = (findByUsername(username) != null) ? true :  false;
 		return exist;
 	}
-
 	@Override
-	public boolean existsByemail(String email) {
+	public boolean existsByEmail(String email) {
 
 		boolean exist = (findByEmail(email) != null) ? true :  false;
 		return exist;
 	}
-
-
 
 }

@@ -1,37 +1,34 @@
 package ma.eheio.schooly.services.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
+
 import ma.eheio.schooly.model.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Getter
+@Service
 public class UserPrinciple implements UserDetails {
-    private static final long serialVersionUID = 1L;
+    
+	private static final long serialVersionUID = 1L;
 
     private Long id;
     
-	@SuppressWarnings("unused")
 	private String userID;
 
-	@SuppressWarnings("unused")
 	private String firstName;
 	
-	@SuppressWarnings("unused")
 	private String lastName;
 	
-	@SuppressWarnings("unused")
 	private String phone;
 
-	@SuppressWarnings("unused")
 	private String email;
     
 	private String username;
@@ -41,6 +38,17 @@ public class UserPrinciple implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+    //private RoleName userRole;
+	
+    //private Boolean locked;
+	
+    //private Boolean enabled;
+	
+
+	public UserPrinciple() {
+		
+	}
+    
     public UserPrinciple(Long id, String userID, String firstName, String lastName, String phone, String email,
 			String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super();
@@ -53,6 +61,62 @@ public class UserPrinciple implements UserDetails {
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public static UserPrinciple build(User user) {
@@ -85,7 +149,8 @@ public class UserPrinciple implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+
+    	return authorities;
     }
 
     @Override

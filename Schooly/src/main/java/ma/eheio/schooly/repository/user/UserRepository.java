@@ -17,6 +17,6 @@ public interface UserRepository {
 	User findByCredentials(String username, String password);	
 	
 	boolean existsByUsername(String username);
-	boolean existsByemail(String email);
+	boolean existsByEmail(String email);
 	
 }
