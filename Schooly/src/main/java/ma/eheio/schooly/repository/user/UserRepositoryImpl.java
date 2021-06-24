@@ -9,16 +9,16 @@ import org.springframework.stereotype.Repository;
 import ma.eheio.schooly.model.User;
 
 @Repository
-public class UserRepositoryHibernate implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
 
 	@Autowired
 	UserRepositoryJpa userRepositoryJpa;
 
 	@Override
-	public void add(User user) {
-		userRepositoryJpa.save(user);
+	public User save(User user) {
+		return userRepositoryJpa.save(user);
 	}
-
+	
 	@Override
 	public void update(User user) {
 		userRepositoryJpa.save(user);
@@ -41,11 +41,6 @@ public class UserRepositoryHibernate implements UserRepository {
 		}
 		return user;
 	}
-	
-	@Override
-	public User findByEmail(String email) {
-		return userRepositoryJpa.findByEmail(email);
-	}
 
 	@Override
 	public List<User> findAll() {
@@ -57,6 +52,11 @@ public class UserRepositoryHibernate implements UserRepository {
 		return userRepositoryJpa.findByUsername(username);
 	}
 	
+	@Override
+	public User findByEmail(String email) {
+		return userRepositoryJpa.findByEmail(email);
+	}
+/*
 	@Override
 	public User findByCredentials(String username, String password) {
 		return userRepositoryJpa.findByCredentials(username, password);
@@ -74,5 +74,5 @@ public class UserRepositoryHibernate implements UserRepository {
 		boolean exist = (findByEmail(email) != null) ? true :  false;
 		return exist;
 	}
-
+*/
 }

@@ -1,48 +1,25 @@
-package ma.eheio.schooly.controller;
+package ma.eheio.schooly.controller.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import ma.eheio.schooly.model.User;
 import ma.eheio.schooly.services.user.UserService;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
-	@Autowired
 	private UserService userService;
 
-	//@Autowired
-	//private CourseService courseService;
-
-	// TO DO : manage password exception
-	@GetMapping("/new")
-	public String add(Model model) {
-		
-		/**
-		 * Create model attribute to bind from data
-		 */
-		User user = new User();
-		model.addAttribute("user", user);
-		return "user/new_user";
+	public UserController(UserService userService) {
+		super();
+		this.userService = userService;
 	}
 
-	@PostMapping("/save")
-	public String save(@ModelAttribute("user") User user) {
-		
-		/**
-		 * Save User to database
-		 */
-		userService.add(user);
-		return "redirect:/user/list";
-	}
 
 	@GetMapping("/update/{id}")
 	public String update(@PathVariable(value = "id") Long id, Model model)

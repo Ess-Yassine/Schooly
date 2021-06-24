@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,18 +27,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "User", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "user_id", "phone", "email", "username" }) })
+@Table(name = "User", uniqueConstraints = { @UniqueConstraint(columnNames = { "phone", "email", "username" }) })
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-
-	@NotNull
-	@Column(name = "user_id", length = 50)
-	private String userID;
 
 	@NotNull
 	@Column(name = "first_name", length = 50)
@@ -52,7 +48,7 @@ public class User {
 	private String phone;
 
 	@NotNull
-	//@NaturalId
+	// @NaturalId
 	@Email
 	@Column(name = "email", unique = true, length = 50)
 	private String email;
@@ -62,6 +58,9 @@ public class User {
 
 	@Column(name = "password", length = 50)
 	private String password;
+	
+	@Column(name = "reset_password_token")
+    private String resetPasswordToken;
 
 	@Column(name = "last_connection")
 	private LocalDateTime lastConnection;
@@ -70,10 +69,15 @@ public class User {
 	private LocalDateTime lastConnectionDisplay;
 
 	/*
-	 * =============================== 
-	 * 		To be added later on
+	 * =============================== To be added later on
 	 * ===============================
 	 * 
+	 */
+
+	/*
+	 * @NotNull
+	 * 
+	 * @Column(name = "user_id", length = 50) private String userID;
 	 */
 
 	/*
@@ -98,27 +102,21 @@ public class User {
 	 * @Column(name = "lock") private boolean isNotLocked;
 	 */
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_notifications", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "notification_id", referencedColumnName = "id") })
-	private List<Notification> notifications;
-
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Classroom> classrooms;
 
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Course> courses;
 
-	public User() {
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Role> roles = new HashSet<>();
 
-	}
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_notifications", joinColumns = {
+			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "notification_id", referencedColumnName = "id") })
+	private List<Notification> notifications;
 
 	public User(@NotNull @Size(min = 3, max = 30) String firstName, @NotNull @Size(min = 3, max = 30) String lastName,
 			@NotNull String phone, @NotNull String email, @Size(min = 3, max = 50) String username,
@@ -132,24 +130,10 @@ public class User {
 		this.password = password;
 	}
 
-	public User(@NotNull String userID, @NotNull @Size(min = 3, max = 30) String firstName,
-			@NotNull @Size(min = 3, max = 30) String lastName, @NotNull String phone, @NotNull @Email String email,
-			@Size(min = 3, max = 50) String username, @Size(min = 8, max = 20) String password) {
+	public User(@NotNull @Size(min = 3, max = 30) String firstName, @NotNull @Size(min = 3, max = 30) String lastName,
+			@NotNull String phone, @NotNull @Email String email, @Size(min = 3, max = 50) String username,
+			@Size(min = 8, max = 20) String password, Collection<Role> roles) {
 		super();
-		this.userID = userID;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phone = phone;
-		this.email = email;
-		this.username = username;
-		this.password = password;
-	}
-
-	public User(@NotNull String userID, @NotNull @Size(min = 3, max = 30) String firstName,
-			@NotNull @Size(min = 3, max = 30) String lastName, @NotNull String phone, @NotNull @Email String email,
-			@Size(min = 3, max = 50) String username, @Size(min = 8, max = 20) String password, Set<Role> roles) {
-		super();
-		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;
@@ -159,20 +143,28 @@ public class User {
 		this.roles = roles;
 	}
 
+	public User(@NotNull String firstName, @NotNull String lastName, @NotNull String phone,
+			@NotNull @Email String email, String username, String password, String resetPasswordToken) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
+	public User() {
+
+	}
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
-		this.userID = userID;
 	}
 
 	public String getFirstName() {
@@ -223,6 +215,14 @@ public class User {
 		this.password = password;
 	}
 
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
+
 	public LocalDateTime getLastConnection() {
 		return lastConnection;
 	}
@@ -269,5 +269,9 @@ public class User {
 
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
 	}
 }
