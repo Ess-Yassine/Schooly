@@ -12,8 +12,6 @@ import javax.persistence.UniqueConstraint;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,10 +54,10 @@ public class User {
 	@Column(name = "username", unique = true, length = 50)
 	private String username;
 
-	@Column(name = "password", length = 50)
+	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "reset_password_token")
+	@Column(name = "reset_password_token", length = 45)
     private String resetPasswordToken;
 
 	@Column(name = "last_connection")
@@ -243,7 +241,7 @@ public class User {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -269,9 +267,5 @@ public class User {
 
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
-	}
-
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
 	}
 }

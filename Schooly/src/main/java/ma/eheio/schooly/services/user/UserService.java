@@ -10,10 +10,15 @@ import ma.eheio.schooly.model.User;
 public interface UserService extends UserDetailsService{
 	
 	User save(UserRegistrationDto userRegistrationDto);
+	void updateResetPasswordToken(String token, String email);
+	void updatePassword(User user, String password);
+	User findByResetPasswordToken(String resetPasswordToken);
+	
 	void update(User user);
 	void delete(User user);
 	
-	User findById(Long id);
 	List<User> findAll();
+	User findById(Long id);
+	User findByEmail(String email);
 	
 }

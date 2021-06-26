@@ -56,7 +56,13 @@ public class UserRepositoryImpl implements UserRepository {
 	public User findByEmail(String email) {
 		return userRepositoryJpa.findByEmail(email);
 	}
-/*
+	
+	@Override
+	public User findByResetPasswordToken(String resetPasswordToken) {
+		return userRepositoryJpa.findByResetPasswordToken(resetPasswordToken);
+	}
+	
+	/*
 	@Override
 	public User findByCredentials(String username, String password) {
 		return userRepositoryJpa.findByCredentials(username, password);
@@ -74,5 +80,6 @@ public class UserRepositoryImpl implements UserRepository {
 		boolean exist = (findByEmail(email) != null) ? true :  false;
 		return exist;
 	}
-*/
+	 */
+
 }

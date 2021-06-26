@@ -14,6 +14,7 @@ public interface UserRepository {
 	User findById(Long id);
 	User findByEmail(String email);
 	User findByUsername(String username);
+	User findByResetPasswordToken(String resetPasswordToken);
 	
 	/*
 
