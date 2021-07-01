@@ -20,6 +20,7 @@ import ma.eheio.schooly.model.Role;
 import ma.eheio.schooly.model.User;
 import ma.eheio.schooly.repository.role.RoleRepository;
 import ma.eheio.schooly.repository.user.UserRepository;
+import ma.eheio.schooly.security.config.CustomUserDetails;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -85,8 +86,9 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid email or password!");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				mapRolesToAuthorities(user.getRoles()));
+		return new CustomUserDetails(user);
+		//return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+				//mapRolesToAuthorities(user.getRoles()));
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

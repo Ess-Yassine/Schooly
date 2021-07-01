@@ -20,7 +20,6 @@ public class UserController {
 		this.userService = userService;
 	}
 
-
 	@GetMapping("/update/{id}")
 	public String update(@PathVariable(value = "id") Long id, Model model)
 
@@ -54,5 +53,10 @@ public class UserController {
 		model.addAttribute("listUsers", userService.findAll());
 		//model.addAttribute("listCourses", courseService.getAll());
 		return "user/list_users";
+	}
+	
+	@GetMapping("/profile")
+	public String ViewProfile() {
+		return "user/profile";
 	}
 }
